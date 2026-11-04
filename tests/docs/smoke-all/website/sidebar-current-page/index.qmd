@@ -1,0 +1,11 @@
+---
+title: "Home"
+_quarto:
+  tests:
+    html:
+      ensureHtmlElements:
+        - ['#quarto-sidebar a.sidebar-link.active[href="./index.html"][aria-current="page"]']
+        - ['#quarto-sidebar a.sidebar-link:not(.active)[aria-current]']
+---
+
+The home page link is marked as the current page too.

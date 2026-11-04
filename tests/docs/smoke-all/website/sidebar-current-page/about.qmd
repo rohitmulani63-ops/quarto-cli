@@ -1,0 +1,12 @@
+---
+title: "About"
+_quarto:
+  tests:
+    html:
+      ensureHtmlElements:
+        - ['#quarto-sidebar a.sidebar-link.active[href="./about.html"][aria-current="page"]']
+        - ['#quarto-sidebar a.sidebar-link:not(.active)[aria-current]']
+---
+
+The sidebar link to the current page is marked with `aria-current="page"`,
+and no other sidebar link is. See quarto-cli#15190.

@@ -1,0 +1,13 @@
+project:
+  type: website
+  output-dir: .
+
+website:
+  title: "Sidebar current page"
+  sidebar:
+    contents:
+      - index.qmd
+      - about.qmd
+      - section: section.qmd
+        contents:
+          - section-child.qmd

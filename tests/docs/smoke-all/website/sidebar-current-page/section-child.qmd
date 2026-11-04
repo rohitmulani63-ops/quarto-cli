@@ -1,0 +1,13 @@
+---
+title: "Section child"
+_quarto:
+  tests:
+    html:
+      ensureHtmlElements:
+        - ['#quarto-sidebar a.sidebar-link.active[href="./section-child.html"][aria-current="page"]']
+        - ['#quarto-sidebar a[href="./section.html"][aria-current]',
+           '#quarto-sidebar a.sidebar-link:not(.active)[aria-current]']
+---
+
+The parent section of the current page is expanded but is not the current
+page, so its link has no `aria-current`.

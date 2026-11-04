@@ -1,0 +1,12 @@
+---
+title: "Section"
+_quarto:
+  tests:
+    html:
+      ensureHtmlElements:
+        - ['#quarto-sidebar a.sidebar-link.active[href="./section.html"][aria-current="page"]']
+        - ['#quarto-sidebar a.sidebar-link:not(.active)[aria-current]']
+---
+
+A section with its own page gets `aria-current="page"` on its link when it is
+the current page.
