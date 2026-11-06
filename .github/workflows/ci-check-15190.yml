@@ -1,0 +1,43 @@
+# TEMPORARY, fork only (rohitmulani63-ops/quarto-cli, branch ci-check-15190).
+# Checks quarto-dev/quarto-cli#15190: the new smoke test must fail without the
+# fix and pass with it. Not part of the PR; the branch is deleted afterwards.
+name: ci-check-15190
+on:
+  push:
+    branches: [ci-check-15190]
+permissions:
+  contents: read
+concurrency:
+  group: ci-check-15190-${{ github.sha }}
+jobs:
+  website-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Install uv (same pin as upstream test-smokes.yml)
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: "0.12.10"
+
+      - name: Python test dependencies (one website doc has a python cell)
+        working-directory: tests
+        run: uv sync --frozen
+
+      - name: Configure Quarto (dev, as in .github/workflows/actions/quarto-dev)
+        env:
+          QUARTO_SKIP_DENO_CACHE_WIPE: "1"
+        run: ./configure.sh
+
+      - name: New test - sidebar-current-page
+        working-directory: tests
+        run: ./run-tests.sh smoke/smoke-all.test.ts -- 'docs/smoke-all/website/sidebar-current-page/*.qmd'
+
+      - name: All website smoke tests
+        if: always()
+        working-directory: tests
+        run: ./run-tests.sh smoke/smoke-all.test.ts -- 'docs/smoke-all/website/**/*.qmd'
